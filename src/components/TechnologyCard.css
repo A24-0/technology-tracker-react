@@ -1,10 +1,12 @@
 .technology-card {
   border: 2px solid #ddd;
+  border-left: 4px solid #ddd;
   border-radius: 8px;
   padding: 20px;
   margin: 15px 0;
   background-color: #fff;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .technology-card:hover {
@@ -14,17 +16,20 @@
 
 /* Стили для разных статусов */
 .technology-card--completed {
-  border-color: #4caf50;
+  border-color: #45b7d1;
+  border-left-color: #45b7d1;
   background-color: #f1f8f4;
 }
 
 .technology-card--in-progress {
-  border-color: #ff9800;
+  border-color: #4ecdc4;
+  border-left-color: #4ecdc4;
   background-color: #fff8f0;
 }
 
 .technology-card--not-started {
-  border-color: #f44336;
+  border-color: #ff6b6b;
+  border-left-color: #ff6b6b;
   background-color: #fff5f5;
 }
 
@@ -65,14 +70,14 @@
 }
 
 .technology-card--completed .status-text {
-  color: #4caf50;
+  color: #45b7d1;
 }
 
 .technology-card--in-progress .status-text {
-  color: #ff9800;
+  color: #4ecdc4;
 }
 
 .technology-card--not-started .status-text {
-  color: #f44336;
+  color: #ff6b6b;
 }
 

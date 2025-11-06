@@ -22,7 +22,7 @@
 
 .App-header {
   background-color: #282c34;
-  padding: 20px;
+  padding: 30px 20px;
   border-radius: 8px;
   margin-bottom: 30px;
   display: flex;
@@ -31,6 +31,11 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-header h1 {
+  margin: 10px 0 0 0;
+  font-size: 2.5em;
 }
 
 .App-link {

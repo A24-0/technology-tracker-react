@@ -1,6 +1,6 @@
 import './TechnologyCard.css';
 
-function TechnologyCard({ title, description, status }) {
+function TechnologyCard({ id, title, description, status, onStatusChange }) {
   const getStatusIcon = () => {
     if (status === 'completed') return '✅';
     if (status === 'in-progress') return '⏳';
@@ -15,8 +15,17 @@ function TechnologyCard({ title, description, status }) {
     return status;
   };
 
+  const handleClick = () => {
+    if (onStatusChange) {
+      onStatusChange(id);
+    }
+  };
+
   return (
-    <div className={`technology-card technology-card--${status}`}>
+    <div 
+      className={`technology-card technology-card--${status}`}
+      onClick={handleClick}
+    >
       <div className="technology-info">
         <h3>{title}</h3>
         <p>{description}</p>
