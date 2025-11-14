@@ -1,6 +1,7 @@
 import './TechnologyCard.css';
+import TechnologyNotes from './TechnologyNotes';
 
-function TechnologyCard({ id, title, description, status, onStatusChange }) {
+function TechnologyCard({ id, title, description, status, notes, onStatusChange, onNotesChange }) {
   const getStatusIcon = () => {
     if (status === 'completed') return '✅';
     if (status === 'in-progress') return '⏳';
@@ -15,7 +16,11 @@ function TechnologyCard({ id, title, description, status, onStatusChange }) {
     return status;
   };
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    // Не меняем статус при клике на заметки
+    if (e.target.closest('.notes-section')) {
+      return;
+    }
     if (onStatusChange) {
       onStatusChange(id);
     }
@@ -33,6 +38,11 @@ function TechnologyCard({ id, title, description, status, onStatusChange }) {
           <span className="status-icon">{getStatusIcon()}</span>
           <span className="status-text">{getStatusText()}</span>
         </div>
+        <TechnologyNotes 
+          notes={notes || ''} 
+          onNotesChange={onNotesChange} 
+          techId={id} 
+        />
       </div>
     </div>
   );

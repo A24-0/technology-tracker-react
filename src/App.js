@@ -1,67 +1,63 @@
 import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import useTechnologies from './hooks/useTechnologies';
 import TechnologyCard from './components/TechnologyCard';
 import ProgressHeader from './components/ProgressHeader';
+import ProgressBar from './components/ProgressBar';
+import ProgressDashboard from './components/ProgressDashboard';
 import Statistics from './components/Statistics';
 import QuickActions from './components/QuickActions';
 import FilterTabs from './components/FilterTabs';
-
-const initialTechnologies = [
-  { id: 1, title: 'React Components', description: 'Изучение базовых компонентов', status: 'not-started' },
-  { id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX', status: 'not-started' },
-  { id: 3, title: 'State Management', description: 'Работа с состоянием компонентов', status: 'not-started' },
-  { id: 4, title: 'Hooks', description: 'Использование хуков React', status: 'not-started' },
-  { id: 5, title: 'Event Handling', description: 'Обработка событий в React', status: 'not-started' }
-];
+import WindowSizeTracker from './components/WindowSizeTracker';
+import UserProfile from './components/UserProfile';
+import UserSettings from './components/UserSettings';
+import ContactForm from './components/ContactForm';
 
 function App() {
-  const [technologies, setTechnologies] = useState(initialTechnologies);
+  // Используем кастомный хук для управления технологиями
+  const { 
+    technologies, 
+    updateStatus, 
+    updateNotes, 
+    progress,
+    markAllCompleted,
+    resetAllStatuses,
+    randomSelectNext
+  } = useTechnologies();
+
   const [activeFilter, setActiveFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Функция для изменения статуса технологии
+  // Функция для изменения статуса технологии (циклическое переключение)
   const handleStatusChange = (id) => {
-    setTechnologies(prevTechnologies => 
-      prevTechnologies.map(tech => {
-        if (tech.id === id) {
-          // Циклическое переключение: not-started -> in-progress -> completed -> not-started
-          const statusOrder = ['not-started', 'in-progress', 'completed'];
-          const currentIndex = statusOrder.indexOf(tech.status);
-          const nextIndex = (currentIndex + 1) % statusOrder.length;
-          return { ...tech, status: statusOrder[nextIndex] };
-        }
-        return tech;
-      })
-    );
-  };
-
-  // Функция для отметки всех как выполненных
-  const markAllCompleted = () => {
-    setTechnologies(prevTechnologies =>
-      prevTechnologies.map(tech => ({ ...tech, status: 'completed' }))
-    );
-  };
-
-  // Функция для сброса всех статусов
-  const resetAllStatuses = () => {
-    setTechnologies(prevTechnologies =>
-      prevTechnologies.map(tech => ({ ...tech, status: 'not-started' }))
-    );
-  };
-
-  // Функция для случайного выбора следующей технологии
-  const randomSelectNext = () => {
-    const notStarted = technologies.filter(tech => tech.status === 'not-started');
-    if (notStarted.length > 0) {
-      const randomTech = notStarted[Math.floor(Math.random() * notStarted.length)];
-      handleStatusChange(randomTech.id);
+    const tech = technologies.find(t => t.id === id);
+    if (tech) {
+      const statusOrder = ['not-started', 'in-progress', 'completed'];
+      const currentIndex = statusOrder.indexOf(tech.status);
+      const nextIndex = (currentIndex + 1) % statusOrder.length;
+      updateStatus(id, statusOrder[nextIndex]);
     }
   };
 
-  // Фильтрация технологий по статусу
+  // Фильтрация технологий по статусу и поисковому запросу
   const getFilteredTechnologies = () => {
-    if (activeFilter === 'all') return technologies;
-    return technologies.filter(tech => tech.status === activeFilter);
+    let filtered = technologies;
+
+    // Фильтрация по статусу
+    if (activeFilter !== 'all') {
+      filtered = filtered.filter(tech => tech.status === activeFilter);
+    }
+
+    // Фильтрация по поисковому запросу
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(tech =>
+        tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tech.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return filtered;
   };
 
   const filteredTechnologies = getFilteredTechnologies();
@@ -72,18 +68,50 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Technology Tracker</h1>
       </header>
+      
+      {/* Компоненты из теоретической части */}
+      <WindowSizeTracker />
+      <UserProfile />
+      <UserSettings />
+      <ContactForm />
+
+      {/* Прогресс-бар с использованием переиспользуемого компонента */}
+      <div style={{ maxWidth: '600px', margin: '20px auto', padding: '0 20px' }}>
+        <ProgressBar 
+          progress={progress}
+          label="Общий прогресс"
+          color="#4CAF50"
+          animated={true}
+          height={25}
+        />
+      </div>
+
       <ProgressHeader technologies={technologies} />
+      <ProgressDashboard technologies={technologies} />
       <Statistics technologies={technologies} />
       <QuickActions 
         onMarkAllCompleted={markAllCompleted}
         onResetAll={resetAllStatuses}
         onRandomSelect={randomSelectNext}
+        technologies={technologies}
       />
       <FilterTabs 
         activeFilter={activeFilter} 
         onFilterChange={setActiveFilter}
         technologies={technologies}
       />
+      
+      {/* Поиск по технологиям */}
+      <div className="search-box">
+        <input
+          type="text"
+          placeholder="Поиск технологий..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <span className="search-results">Найдено: {filteredTechnologies.length}</span>
+      </div>
+
       <div className="technologies-container">
         {filteredTechnologies.map(technology => (
           <TechnologyCard 
@@ -92,7 +120,9 @@ function App() {
             title={technology.title} 
             description={technology.description} 
             status={technology.status}
+            notes={technology.notes}
             onStatusChange={handleStatusChange}
+            onNotesChange={updateNotes}
           />
         ))}
       </div>

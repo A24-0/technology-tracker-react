@@ -1,0 +1,15 @@
+.progress-dashboard {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-dashboard h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+

@@ -1,0 +1,28 @@
+.window-tracker {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.window-tracker h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.size-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.size-info p {
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+.size-info strong {
+  color: #61dafb;
+}
+
