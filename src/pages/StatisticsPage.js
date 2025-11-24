@@ -66,3 +66,4 @@ function StatisticsPage({ technologies, progress }) {
 export default StatisticsPage;
 
 
+

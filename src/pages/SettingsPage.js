@@ -35,3 +35,4 @@ function SettingsPage({ onResetAll, onMarkAllCompleted }) {
 export default SettingsPage;
 
 
+
