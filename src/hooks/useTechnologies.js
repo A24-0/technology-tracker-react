@@ -126,11 +126,32 @@ function useTechnologies() {
     }
   };
 
+  const addTechnology = (payload) => {
+    setTechnologies(prev => {
+      const nextId = prev.length > 0 ? Math.max(...prev.map(tech => tech.id)) + 1 : 1;
+      const defaults = {
+        status: 'not-started',
+        notes: '',
+        category: 'frontend'
+      };
+
+      return [
+        ...prev,
+        {
+          ...defaults,
+          ...payload,
+          id: nextId
+        }
+      ];
+    });
+  };
+
   return {
     technologies: normalizedTechnologies,
     setTechnologies,
     updateStatus,
     updateNotes,
+    addTechnology,
     progress: calculateProgress(),
     markAllCompleted,
     resetAllStatuses,

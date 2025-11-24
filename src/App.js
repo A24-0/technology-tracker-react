@@ -1,35 +1,33 @@
-import { useState } from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import useTechnologies from './hooks/useTechnologies';
-import TechnologyCard from './components/TechnologyCard';
-import ProgressHeader from './components/ProgressHeader';
-import ProgressBar from './components/ProgressBar';
-import ProgressDashboard from './components/ProgressDashboard';
-import Statistics from './components/Statistics';
-import QuickActions from './components/QuickActions';
-import FilterTabs from './components/FilterTabs';
-import WindowSizeTracker from './components/WindowSizeTracker';
-import UserProfile from './components/UserProfile';
-import UserSettings from './components/UserSettings';
-import ContactForm from './components/ContactForm';
+import Navigation from './components/Navigation';
+import ProtectedRoute from './components/ProtectedRoute';
+import Home from './pages/Home';
+import TechnologyList from './pages/TechnologyList';
+import TechnologyDetail from './pages/TechnologyDetail';
+import AddTechnology from './pages/AddTechnology';
+import StatisticsPage from './pages/StatisticsPage';
+import SettingsPage from './pages/SettingsPage';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 
 function App() {
-  // Используем кастомный хук для управления технологиями
   const { 
     technologies, 
     updateStatus, 
     updateNotes, 
+    addTechnology,
     progress,
     markAllCompleted,
     resetAllStatuses,
     randomSelectNext
   } = useTechnologies();
 
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
 
-  // Функция для изменения статуса технологии (циклическое переключение)
   const handleStatusChange = (id) => {
     const tech = technologies.find(t => t.id === id);
     if (tech) {
@@ -40,93 +38,109 @@ function App() {
     }
   };
 
-  // Фильтрация технологий по статусу и поисковому запросу
-  const getFilteredTechnologies = () => {
-    let filtered = technologies;
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const storedUsername = localStorage.getItem('username') || '';
+    setIsLoggedIn(loggedIn);
+    setUsername(storedUsername);
+  }, []);
 
-    // Фильтрация по статусу
-    if (activeFilter !== 'all') {
-      filtered = filtered.filter(tech => tech.status === activeFilter);
-    }
-
-    // Фильтрация по поисковому запросу
-    if (searchQuery.trim()) {
-      filtered = filtered.filter(tech =>
-        tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        tech.description.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    return filtered;
+  const handleLogin = (user) => {
+    setIsLoggedIn(true);
+    setUsername(user);
   };
 
-  const filteredTechnologies = getFilteredTechnologies();
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('username');
+    setIsLoggedIn(false);
+    setUsername('');
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Technology Tracker</h1>
-      </header>
-      
-      {/* Компоненты из теоретической части */}
-      <WindowSizeTracker />
-      <UserProfile />
-      <UserSettings />
-      <ContactForm />
-
-      {/* Прогресс-бар с использованием переиспользуемого компонента */}
-      <div style={{ maxWidth: '600px', margin: '20px auto', padding: '0 20px' }}>
-        <ProgressBar 
-          progress={progress}
-          label="Общий прогресс"
-          color="#4CAF50"
-          animated={true}
-          height={25}
+    <Router>
+      <div className="app-shell">
+        <Navigation
+          isLoggedIn={isLoggedIn}
+          username={username}
+          onLogout={handleLogout}
         />
-      </div>
 
-      <ProgressHeader technologies={technologies} />
-      <ProgressDashboard technologies={technologies} />
-      <Statistics technologies={technologies} />
-      <QuickActions 
-        onMarkAllCompleted={markAllCompleted}
-        onResetAll={resetAllStatuses}
-        onRandomSelect={randomSelectNext}
-        technologies={technologies}
-      />
-      <FilterTabs 
-        activeFilter={activeFilter} 
-        onFilterChange={setActiveFilter}
-        technologies={technologies}
-      />
-      
-      {/* Поиск по технологиям */}
-      <div className="search-box">
-        <input
-          type="text"
-          placeholder="Поиск технологий..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <span className="search-results">Найдено: {filteredTechnologies.length}</span>
-      </div>
+        <main className="app-main">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  technologies={technologies}
+                  progress={progress}
+                  onMarkAllCompleted={markAllCompleted}
+                  onResetAll={resetAllStatuses}
+                  onRandomSelect={randomSelectNext}
+                />
+              }
+            />
 
-      <div className="technologies-container">
-        {filteredTechnologies.map(technology => (
-          <TechnologyCard 
-            key={technology.id} 
-            id={technology.id}
-            title={technology.title} 
-            description={technology.description} 
-            status={technology.status}
-            notes={technology.notes}
-            onStatusChange={handleStatusChange}
-            onNotesChange={updateNotes}
-          />
-        ))}
+            <Route
+              path="/technologies"
+              element={
+                <TechnologyList
+                  technologies={technologies}
+                  onStatusChange={handleStatusChange}
+                  onNotesChange={updateNotes}
+                />
+              }
+            />
+
+            <Route
+              path="/technology/:techId"
+              element={
+                <TechnologyDetail
+                  technologies={technologies}
+                  onUpdateStatus={updateStatus}
+                  onUpdateNotes={updateNotes}
+                />
+              }
+            />
+
+            <Route
+              path="/add-technology"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <AddTechnology onAddTechnology={addTechnology} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/statistics"
+              element={
+                <StatisticsPage
+                  technologies={technologies}
+                  progress={progress}
+                />
+              }
+            />
+
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <SettingsPage
+                    onMarkAllCompleted={markAllCompleted}
+                    onResetAll={resetAllStatuses}
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
       </div>
-    </div>
+    </Router>
   );
 }
 
