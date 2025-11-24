@@ -1,0 +1,39 @@
+.technology-resources {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+}
+
+.technology-resources ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.technology-resources li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.technology-resources li a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.technology-resources li span {
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.technology-resources__error {
+  color: #dc2626;
+}
+
+

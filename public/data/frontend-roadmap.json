@@ -1,0 +1,37 @@
+{
+  "title": "Frontend Roadmap Sample",
+  "technologies": [
+    {
+      "title": "React Router",
+      "description": "Маршрутизация в SPA приложениях",
+      "category": "frontend",
+      "difficulty": "intermediate",
+      "resources": [
+        "https://reactrouter.com/en/main",
+        "https://ru.reactjs.org/docs/getting-started.html"
+      ]
+    },
+    {
+      "title": "Redux Toolkit",
+      "description": "Современное управление состоянием",
+      "category": "frontend",
+      "difficulty": "advanced",
+      "resources": [
+        "https://redux-toolkit.js.org/",
+        "https://learnredux.com/"
+      ]
+    },
+    {
+      "title": "TypeScript",
+      "description": "Типы для JavaScript приложений",
+      "category": "language",
+      "difficulty": "intermediate",
+      "resources": [
+        "https://www.typescriptlang.org/docs/",
+        "https://www.typescriptlang.org/ru/docs/"
+      ]
+    }
+  ]
+}
+
+

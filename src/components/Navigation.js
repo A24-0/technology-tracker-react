@@ -31,6 +31,11 @@ function Navigation({ isLoggedIn, username, onLogout }) {
           </Link>
         </li>
         <li>
+          <Link to="/api-explorer" className={isActive('/api-explorer')}>
+            API
+          </Link>
+        </li>
+        <li>
           <Link to="/add-technology" className={isActive('/add-technology')}>
             Добавить
           </Link>

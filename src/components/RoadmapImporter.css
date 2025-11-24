@@ -1,0 +1,23 @@
+.roadmap-importer {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.roadmap-importer__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.roadmap-importer__message {
+  font-size: 0.95rem;
+  color: #0f172a;
+  margin: 0;
+}
+
+

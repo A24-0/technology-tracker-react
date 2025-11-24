@@ -12,6 +12,7 @@ import StatisticsPage from './pages/StatisticsPage';
 import SettingsPage from './pages/SettingsPage';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import ApiExplorer from './pages/ApiExplorer';
 
 function App() {
   const { 
@@ -120,6 +121,11 @@ function App() {
                   progress={progress}
                 />
               }
+            />
+
+            <Route
+              path="/api-explorer"
+              element={<ApiExplorer />}
             />
 
             <Route

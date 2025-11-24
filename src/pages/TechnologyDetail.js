@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import TechnologyResources from '../components/TechnologyResources';
 
 function TechnologyDetail({ technologies, onUpdateStatus, onUpdateNotes }) {
   const { techId } = useParams();
@@ -75,6 +76,8 @@ function TechnologyDetail({ technologies, onUpdateStatus, onUpdateNotes }) {
             onChange={e => onUpdateNotes(technology.id, e.target.value)}
           />
         </div>
+
+        <TechnologyResources query={technology.title} />
       </div>
     </div>
   );
