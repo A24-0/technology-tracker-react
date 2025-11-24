@@ -96,6 +96,33 @@ function useTechnologies() {
     );
   };
 
+  // Функция для обновления дедлайна
+  const updateDeadline = (techId, deadline) => {
+    setTechnologies(prev => 
+      prev.map(tech => 
+        tech.id === techId ? { ...tech, deadline } : tech
+      )
+    );
+  };
+
+  // Функция для массового обновления статусов
+  const bulkUpdateStatus = (techIds, newStatus) => {
+    setTechnologies(prev => 
+      prev.map(tech => 
+        techIds.includes(tech.id) ? { ...tech, status: newStatus } : tech
+      )
+    );
+  };
+
+  // Функция для редактирования технологии
+  const editTechnology = (techId, techData) => {
+    setTechnologies(prev => 
+      prev.map(tech => 
+        tech.id === techId ? { ...tech, ...techData } : tech
+      )
+    );
+  };
+
   // Функция для расчета общего прогресса
   const calculateProgress = () => {
     if (normalizedTechnologies.length === 0) return 0;
@@ -151,6 +178,9 @@ function useTechnologies() {
     setTechnologies,
     updateStatus,
     updateNotes,
+    updateDeadline,
+    bulkUpdateStatus,
+    editTechnology,
     addTechnology,
     progress: calculateProgress(),
     markAllCompleted,

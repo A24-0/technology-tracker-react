@@ -1,0 +1,191 @@
+.data-import-export {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.data-import-export h1 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.status-message {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.status-message.success {
+  background-color: #e8f5e8;
+  border: 1px solid #4caf50;
+  color: #2e7d32;
+}
+
+.status-message.error {
+  background-color: #ffebee;
+  border: 1px solid #f44336;
+  color: #c62828;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: #2196f3;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1976d2;
+}
+
+.btn-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #388e3c;
+}
+
+.btn-warning {
+  background-color: #ff9800;
+  color: white;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.btn-warning:hover {
+  background-color: #f57c00;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #d32f2f;
+}
+
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.technologies-section {
+  margin-top: 20px;
+}
+
+.technologies-section h2 {
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.empty-message {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 40px;
+}
+
+.technologies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.technology-card {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.tech-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.tech-header h3 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+}
+
+.tech-header p {
+  margin: 0 0 10px 0;
+  color: #666;
+}
+
+.tech-meta {
+  font-size: 14px;
+  color: #888;
+}
+
+.status-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.status-not-started {
+  background: #fee;
+  color: #c33;
+}
+
+.status-in-progress {
+  background: #ffeaa7;
+  color: #d63031;
+}
+
+.status-completed {
+  background: #d5f4e6;
+  color: #00b894;
+}
+
+.statistics {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e3f2fd;
+  border-radius: 4px;
+}
+
+.statistics h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stats-grid div {
+  font-size: 14px;
+}
+
+.stats-grid strong {
+  color: #1976d2;
+}
+

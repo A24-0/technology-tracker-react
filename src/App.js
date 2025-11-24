@@ -13,13 +13,22 @@ import SettingsPage from './pages/SettingsPage';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import ApiExplorer from './pages/ApiExplorer';
+import FormsPage from './pages/FormsPage';
+import DataManagementPage from './pages/DataManagementPage';
+import TechnologyManager from './components/TechnologyManager';
+import DeadlineForm from './components/DeadlineForm';
+import BulkStatusEditor from './components/BulkStatusEditor';
 
 function App() {
   const { 
     technologies, 
     updateStatus, 
-    updateNotes, 
+    updateNotes,
+    updateDeadline,
+    bulkUpdateStatus,
+    editTechnology,
     addTechnology,
+    setTechnologies,
     progress,
     markAllCompleted,
     resetAllStatuses,
@@ -126,6 +135,47 @@ function App() {
             <Route
               path="/api-explorer"
               element={<ApiExplorer />}
+            />
+
+            <Route
+              path="/forms"
+              element={<FormsPage />}
+            />
+
+            <Route
+              path="/data-management"
+              element={<DataManagementPage />}
+            />
+
+            <Route
+              path="/technology-manager"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <TechnologyManager />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/deadlines"
+              element={
+                <DeadlineForm
+                  technologies={technologies}
+                  onUpdateDeadline={updateDeadline}
+                />
+              }
+            />
+
+            <Route
+              path="/bulk-edit"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <BulkStatusEditor
+                    technologies={technologies}
+                    onBulkUpdate={bulkUpdateStatus}
+                  />
+                </ProtectedRoute>
+              }
             />
 
             <Route
