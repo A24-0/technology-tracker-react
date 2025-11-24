@@ -501,7 +501,7 @@ function WorkingAccessibleForm() {
   };
 
   return (
-    <div style={{ maxWidth: '500px', margin: '20px', padding: '20px', border: '1px solid #ccc' }}>
+{% raw %}    <div style={{ maxWidth: '500px', margin: '20px', padding: '20px', border: '1px solid #ccc' }}>
       <h1>Контактная форма</h1>
       
       {/* Область для скринридера */}
@@ -630,7 +630,7 @@ function WorkingAccessibleForm() {
       >
         Статус формы будет отображаться здесь для скринридеров
       </div>
-    </div>
+    </div>{% endraw %}
   );
 }
 
@@ -787,7 +787,7 @@ function DataImportExport() {
   };
 
   return (
-    <div style={{ 
+{% raw %}    <div style={{ 
       maxWidth: '800px', 
       margin: '20px auto', 
       padding: '20px',
@@ -954,7 +954,7 @@ function DataImportExport() {
           </div>
         </div>
       )}
-    </div>
+    </div>{% endraw %}
   );
 }
 
