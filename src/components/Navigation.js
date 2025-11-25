@@ -71,6 +71,11 @@ function Navigation({ isLoggedIn, username, onLogout }) {
             Импорт/Экспорт
           </Link>
         </li>
+        <li>
+          <Link to="/mui-practice" className={isActive('/mui-practice')} onClick={closeMenu}>
+            UI-кит
+          </Link>
+        </li>
         {isLoggedIn && (
           <>
             <li>

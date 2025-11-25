@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './TechnologyForm.css';
 
 function TechnologyForm({ onSave, onCancel, initialData = {} }) {
@@ -27,7 +27,7 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
   };
 
   // Валидация формы
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {};
 
     // Валидация названия
@@ -66,12 +66,12 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
 
     setErrors(newErrors);
     setIsFormValid(Object.keys(newErrors).length === 0);
-  };
+  }, [formData, isValidUrl]);
 
   // Валидация при каждом изменении формы
   useEffect(() => {
     validateForm();
-  }, [formData]);
+  }, [validateForm]);
 
   // Обработчик изменения полей
   const handleChange = (e) => {
